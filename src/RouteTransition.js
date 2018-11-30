@@ -9,6 +9,7 @@ const identity = val => val;
 class RouteTransition extends Component {
   static defaultProps = {
     wrapperComponent: 'div',
+    routeComponent: 'div',
     runOnMount: false,
     mapStyles: identity,
   };
@@ -16,6 +17,11 @@ class RouteTransition extends Component {
   static propTypes = {
     className: PropTypes.string,
     wrapperComponent: PropTypes.oneOfType([
+      PropTypes.bool,
+      PropTypes.element,
+      PropTypes.string,
+    ]),
+    routeComponent: PropTypes.oneOfType([
       PropTypes.bool,
       PropTypes.element,
       PropTypes.string,
@@ -88,10 +94,11 @@ class RouteTransition extends Component {
   };
 
   renderRoutes = interpolatedStyles => {
+    const RouteComponent = this.props.routeComponent;
     return (
-      <div className={this.props.className}>
+      <RouteComponent className={this.props.className}>
         {interpolatedStyles.map(this.renderRoute)}
-      </div>
+      </RouteComponent>
     );
   };
 
